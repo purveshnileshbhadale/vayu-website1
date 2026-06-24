@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAYU - AI Voice Assistant</title>
+    <meta name="description" content="VAYU is an intelligent AI voice assistant built by Purvesh Nilesh Bhadale. Download and experience the future of voice computing.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a1a;
+            color: #e0e0e0;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        ::selection { background: #2563eb; color: #fff; }
+
+        .bg-glow {
+            position: fixed;
+            top: -20vh; left: -20vw;
+            width: 140vw; height: 140vh;
+            background: radial-gradient(ellipse at 30% 30%, rgba(37,99,235,0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 2rem; max-width: 1100px; margin: 0 auto;
+        }
+        .logo { font-size: 1.8rem; font-weight: 800; color: #fff; letter-spacing: -1px; }
+        .logo span { color: #2563eb; }
+        nav a {
+            color: #a0a0b0; text-decoration: none; margin-left: 2rem;
+            font-size: 0.95rem; transition: color 0.2s;
+        }
+        nav a:hover { color: #fff; }
+
+        .hero {
+            min-height: 80vh; display: flex; align-items: center;
+            padding: 4rem 0; position: relative;
+        }
+        .hero-content { flex: 1; }
+        .hero h1 {
+            font-size: 3.5rem; font-weight: 800; color: #fff;
+            line-height: 1.15; margin-bottom: 1.5rem;
+        }
+        .hero h1 span { color: #2563eb; }
+        .hero p {
+            font-size: 1.2rem; color: #9090a8; max-width: 540px;
+            margin-bottom: 2.5rem;
+        }
+        .hero-badge {
+            display: inline-block; background: rgba(37,99,235,0.15); color: #60a5fa;
+            padding: 0.35rem 1rem; border-radius: 100px; font-size: 0.85rem;
+            margin-bottom: 1.5rem; border: 1px solid rgba(37,99,235,0.25);
+        }
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.9rem 2rem; border-radius: 10px; font-size: 1rem;
+            font-weight: 600; text-decoration: none; cursor: pointer;
+            transition: all 0.25s; border: none;
+        }
+        .btn-primary {
+            background: #2563eb; color: #fff;
+        }
+        .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.35); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06); color: #e0e0e0; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+        .hero-visual {
+            flex: 1; display: flex; justify-content: center;
+        }
+        .hero-visual .circle {
+            width: 320px; height: 320px; border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 6rem; color: #fff; font-weight: 800;
+            box-shadow: 0 0 80px rgba(37,99,235,0.3);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 80px rgba(37,99,235,0.3); }
+            50% { box-shadow: 0 0 120px rgba(37,99,235,0.5); }
+        }
+
+        section { padding: 5rem 0; }
+        .section-title {
+            font-size: 2rem; font-weight: 700; color: #fff;
+            text-align: center; margin-bottom: 0.75rem;
+        }
+        .section-subtitle {
+            text-align: center; color: #9090a8; margin-bottom: 3.5rem; font-size: 1.05rem;
+        }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 2rem; transition: all 0.3s;
+        }
+        .feature-card:hover {
+            background: rgba(255,255,255,0.06); border-color: rgba(37,99,235,0.3);
+            transform: translateY(-4px);
+        }
+        .feature-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(37,99,235,0.12); display: flex; align-items: center;
+            justify-content: center; font-size: 1.5rem; margin-bottom: 1.2rem;
+        }
+        .feature-card h3 { color: #fff; margin-bottom: 0.6rem; font-size: 1.15rem; }
+        .feature-card p { color: #9090a8; font-size: 0.92rem; }
+
+        .download-section {
+            background: linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(124,58,237,0.06) 100%);
+            border-radius: 24px; padding: 4rem 2rem; text-align: center;
+            border: 1px solid rgba(37,99,235,0.1);
+        }
+        .download-section h2 { font-size: 2rem; color: #fff; margin-bottom: 1rem; }
+        .download-section p { color: #9090a8; max-width: 600px; margin: 0 auto 2rem; }
+        .download-info {
+            display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .download-info-item { text-align: center; }
+        .download-info-item .num {
+            font-size: 2rem; font-weight: 700; color: #60a5fa;
+        }
+        .download-info-item .label { color: #707088; font-size: 0.85rem; margin-top: 0.3rem; }
+
+        .about-content {
+            max-width: 700px; margin: 0 auto; text-align: center;
+        }
+        .about-content p { color: #9090a8; margin-bottom: 1.5rem; }
+        .creator-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 2.5rem; margin: 2rem auto 0; max-width: 500px;
+        }
+        .creator-card .name { font-size: 1.3rem; font-weight: 700; color: #fff; }
+        .creator-card .role { color: #60a5fa; font-size: 0.9rem; margin: 0.3rem 0 1rem; }
+        .creator-card .contact { color: #9090a8; font-size: 0.92rem; line-height: 2; }
+        .creator-card .contact a { color: #60a5fa; text-decoration: none; }
+        .creator-card .contact a:hover { text-decoration: underline; }
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 2rem 0; text-align: center; color: #606078; font-size: 0.88rem;
+        }
+        footer a { color: #9090a8; text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 1rem; }
+            nav a { margin: 0 0.75rem; }
+            .hero { flex-direction: column; text-align: center; padding: 2rem 0; }
+            .hero p { margin: 0 auto 2rem; }
+            .btn-group { justify-content: center; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-visual .circle { width: 200px; height: 200px; font-size: 4rem; margin-top: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<header>
+    <div class="logo"><span>V</span>AYU</div>
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="container" style="display:flex;align-items:center;flex-wrap:wrap;gap:3rem;">
+        <div class="hero-content">
+            <div class="hero-badge">AI-Powered Voice Assistant</div>
+            <h1>Meet <span>VAYU</span><br>Your Intelligent Voice Companion</h1>
+            <p>VAYU is a cutting-edge AI voice assistant that understands natural speech, controls your computer, browses the web, processes files, and helps you get things done — hands-free.</p>
+            <div class="btn-group">
+                <a href="#download" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download VAYU
+                </a>
+                <a href="#features" class="btn btn-secondary">Explore Features</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="circle">V</div>
+        </div>
+    </div>
+</section>
+
+<section id="features">
+    <div class="container">
+        <h2 class="section-title">Powerful Capabilities</h2>
+        <p class="section-subtitle">Everything you need, controlled by your voice</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎤</div>
+                <h3>Voice Commands</h3>
+                <p>Natural speech recognition powered by Gemini AI. Just speak — VAYU understands and acts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🖥️</div>
+                <h3>Computer Control</h3>
+                <p>Open apps, adjust volume, type text, control windows, manage settings — all hands-free.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Web Browsing</h3>
+                <p>Search the web, navigate sites, fill forms, click elements — VAYU drives your browser.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Universal File Processor</h3>
+                <p>Read, summarize, convert, and build files: PDF, DOCX, PPTX, HTML, images, audio, video, and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>Screen Vision</h3>
+                <p>VAYU sees your screen and webcam. Ask what's on screen, read text, analyze images in real time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Long-Term Memory</h3>
+                <p>VAYU remembers your preferences, projects, and personal details across sessions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Document Builder</h3>
+                <p>Generate Word docs, PowerPoint presentations, PDFs, HTML pages, and Markdown files by voice.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Code Assistant</h3>
+                <p>Write, explain, review, fix, and run code in any language. Your AI pair programmer.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Game & App Control</h3>
+                <p>Launch games, check Steam/Epic updates, control YouTube, find flights, set reminders.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="download">
+    <div class="container">
+        <div class="download-section">
+            <h2>Get VAYU</h2>
+            <p>Download the latest version of VAYU AI Assistant for Windows. Lightweight, fast, and completely offline-capable after setup.</p>
+            <div class="download-info">
+                <div class="download-info-item">
+                    <div class="num">v1.0</div>
+                    <div class="label">Current Version</div>
+                </div>
+                <div class="download-info-item">
+                    <div class="num">Windows</div>
+                    <div class="label">Supported OS</div>
+                </div>
+                <div class="download-info-item">
+                    <div class="num">~50 MB</div>
+                    <div class="label">Package Size</div>
+                </div>
+            </div>
+            <a href="downloads/VAYU_Setup.exe" class="btn btn-primary" style="font-size:1.1rem;padding:1rem 2.5rem;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download VAYU Setup
+            </a>
+            <p style="margin-top:1.5rem;font-size:0.85rem;color:#606078;">
+                * EXE installer will be available in the next release.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <h2 class="section-title">About VAYU</h2>
+        <p class="section-subtitle">Built with passion, powered by AI</p>
+        <div class="about-content">
+            <p>
+                VAYU was born from the vision of creating a truly intelligent voice assistant that runs locally on your machine — respecting your privacy while delivering cutting-edge AI capabilities. Unlike cloud-only assistants, VAYU integrates directly with your operating system, applications, and files to provide a seamless, hands-free computing experience.
+            </p>
+            <p>
+                Leveraging Google's Gemini AI for natural language understanding and speech processing, VAYU can hold fluid conversations, see your screen, control your computer, and process any file type you throw at it. It's designed for developers, power users, and anyone who wants to be more productive without touching a keyboard.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <h2 class="section-title">Creator & Publisher</h2>
+        <p class="section-subtitle">Meet the developer behind VAYU</p>
+        <div class="creator-card">
+            <div class="name">Purvesh Nilesh Bhadale</div>
+            <div class="role">Creator & Developer</div>
+            <div class="contact">
+                <div>📞 <a href="tel:+8421919113">+91 8421919113</a></div>
+                <div>✉️ <a href="mailto:purveshnileshbhadale@gmail.com">purveshnileshbhadale@gmail.com</a></div>
+            </div>
+        </div>
+        <div class="about-content" style="text-align:center;margin-top:2rem;">
+            <p>
+                VAYU is developed, maintained, and published independently by Purvesh Nilesh Bhadale.
+                For support, feature requests, or collaboration inquiries, reach out via email or phone.
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>
+            &copy; 2026 <strong>Purvesh Nilesh Bhadale</strong>. All rights reserved.
+            &nbsp;|&nbsp; <a href="mailto:purveshnileshbhadale@gmail.com">Contact</a>
+            &nbsp;|&nbsp; VAYU v1.0
+        </p>
+        <p style="margin-top:0.5rem;font-size:0.8rem;">
+            Built with ❤️ in India
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
